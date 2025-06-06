@@ -1,17 +1,14 @@
-import { serve } from '@hono/node-server'
-import { Hono } from 'hono'
+import { serve } from '@hono/node-server';
+import { Hono } from 'hono';
+import 'dotenv/config';
+
+import { musicRoute } from './routes/music.js';
+import { healthRoute } from './routes/health.js';
 
 const app = new Hono()
 
-const data  = {
-  'title': 'ayafuya',
-  'artist': 'rokudenashi',
-  'link': 'https://yt.nurs.my.id/ayafuya'
-}
-
-app.get('/api/v1/data', (c) => {
-  return c.json(data)
-})
+app.route('/api/v1/', healthRoute)
+app.route('/api/v1/', musicRoute)
 
 serve({
   fetch: app.fetch,

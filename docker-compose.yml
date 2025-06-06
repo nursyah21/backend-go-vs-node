@@ -1,0 +1,31 @@
+services:
+
+  postgres-node:
+    image: postgres:16
+    container_name: postgres-node
+    environment:
+      POSTGRES_USER: node_user
+      POSTGRES_PASSWORD: node_password
+      POSTGRES_DB: api_node
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_node_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  postgres-go:
+    image: postgres:16
+    container_name: postgres-go
+    environment:
+      POSTGRES_USER: go_user
+      POSTGRES_PASSWORD: go_password
+      POSTGRES_DB: api_go
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_go_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  postgres_node_data:
+  postgres_go_data:
