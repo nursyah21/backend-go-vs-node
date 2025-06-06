@@ -1,0 +1,6 @@
+{
+  "license":"MIT",
+  "scripts": {
+    "migrate": "migrate -path ./migrations -database \"postgres://go_user:go_password@localhost:5433/api_go?sslmode=disable\" up"
+  }
+}

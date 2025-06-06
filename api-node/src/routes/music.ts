@@ -29,14 +29,10 @@ musicRoute.delete('/music/:id', async (c) => {
     if (isNaN(id)) {
         return c.json({ error: "Invalid ID format" }, 400)
     }
-    
-    
-    const existing = await db.select().from(musics).where(eq(musics.id, id)).limit(1)
 
-    if (!existing.length) {
-        return c.json({ error: 'id not found' }, 404)
-    }
+    try {
+        await db.delete(musics).where(eq(musics.id, id))
+    } catch  { }
 
-    await db.delete(musics).where(eq(musics.id, id))
     return c.json({ status: "success" })
 })
