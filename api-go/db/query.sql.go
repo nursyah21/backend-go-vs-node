@@ -67,3 +67,29 @@ func (q *Queries) ListMusics(ctx context.Context) ([]Music, error) {
 	}
 	return items, nil
 }
+
+const updateMusic = `-- name: UpdateMusic :exec
+UPDATE musics 
+  set title = $2,
+  artist = $3,
+  link = $4
+WHERE
+  id = $1
+`
+
+type UpdateMusicParams struct {
+	ID     int64
+	Title  string
+	Artist string
+	Link   string
+}
+
+func (q *Queries) UpdateMusic(ctx context.Context, arg UpdateMusicParams) error {
+	_, err := q.db.Exec(ctx, updateMusic,
+		arg.ID,
+		arg.Title,
+		arg.Artist,
+		arg.Link,
+	)
+	return err
+}

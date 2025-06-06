@@ -1,16 +1,41 @@
 # README
 
-read readme.md in each folder api to see how to run it
+## how to run api-node
+
+before you run please make sure you already run of docker compose for database.
+
+**run api-node**
+```bash
+cd api-node
+yarn
+yarn dev
+```
+
+**run api-go**
+for run golang please, make sure you already install air for hot reload in golang, sqlc for generate migrate, migrate for push your migrate sql to your database
+
+```bash
+cd api-go
+yarn generate
+yarn migrate
+yarn dev
+```
+
 
 ## benchmark
 
 spec: windows 10, ram 8gb, cpu i5 6200u
 
-here's a result of golang vs nodejs
+tech stack:
+- nodejs   : hono, drizzle
+- golang   : fiber, sqlc
+- database : postgresql
 
-**100 conection running in 30s, the return of json**
+### benchmark json
 
-**nodejs (hono)**:
+**100 conection running in 30s, and return of json**
+
+**nodejs**:
 - latency:
     - avg:   13.81ms
     - stdev: 6.2ms
@@ -19,7 +44,7 @@ here's a result of golang vs nodejs
     - stdev: 1,132
 - total:     210k in 30s
 
-**golang (fiber)**:
+**golang**:
 - latency:
     - avg:   8.4ms
     - stdev: 4.38ms
@@ -30,9 +55,11 @@ here's a result of golang vs nodejs
 
 **golang 1.6x faster than nodejs for return of json**
 
-**100 conection running in 30s, the return of data from database postgresql**
+### benchmark database
 
-**nodejs (hono, drizzle)**:
+**100 conection running in 30s, and return of data from database**
+
+**nodejs**:
 - latency:
     - avg:   113.7ms
     - stdev: 31.31ms
@@ -41,7 +68,7 @@ here's a result of golang vs nodejs
     - stdev: 142
 - total:     26k in 30s
 
-**golang (fiber, sqlc)**:
+**golang**:
 - latency:
     - avg:   10.0ms
     - stdev: 11.84ms

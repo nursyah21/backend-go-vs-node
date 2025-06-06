@@ -23,6 +23,25 @@ musicRoute.post('/music', async (c) => {
     return c.json({ status: "success" })
 })
 
+musicRoute.put('/music/:id', async (c) => {
+    const id = parseInt(c.req.param('id'))
+
+    if (isNaN(id)) {
+        return c.json({ error: "Invalid ID format" }, 400)
+    }
+
+    const { title, artist, link } = await c.req.json()
+
+    if (!title || !artist || !link) {
+        return c.json({ error: "Missing required fields: title, artist, or link" }, 400)
+    }
+
+    await db.update(musics).set({ title, artist, link })
+        .where(eq(musics.id, id))
+
+    return c.json({ status: "success" })
+})
+
 musicRoute.delete('/music/:id', async (c) => {
     const id = parseInt(c.req.param('id'))
 
@@ -32,7 +51,7 @@ musicRoute.delete('/music/:id', async (c) => {
 
     try {
         await db.delete(musics).where(eq(musics.id, id))
-    } catch  { }
+    } catch { }
 
     return c.json({ status: "success" })
 })
