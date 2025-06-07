@@ -5,8 +5,8 @@
 package db
 
 type Music struct {
-	ID     int64
-	Title  string
-	Artist string
-	Link   string
+	ID     int64  `json:"id"`
+	Title  string `json:"title"`
+	Artist string `json:"artist"`
+	Link   string `json:"link"`
 }

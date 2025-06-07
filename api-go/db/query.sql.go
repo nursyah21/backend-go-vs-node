@@ -18,9 +18,9 @@ INSERT INTO musics (
 `
 
 type CreateMusicParams struct {
-	Title  string
-	Artist string
-	Link   string
+	Title  string `json:"title"`
+	Artist string `json:"artist"`
+	Link   string `json:"link"`
 }
 
 func (q *Queries) CreateMusic(ctx context.Context, arg CreateMusicParams) error {
@@ -78,10 +78,10 @@ WHERE
 `
 
 type UpdateMusicParams struct {
-	ID     int64
-	Title  string
-	Artist string
-	Link   string
+	ID     int64  `json:"id"`
+	Title  string `json:"title"`
+	Artist string `json:"artist"`
+	Link   string `json:"link"`
 }
 
 func (q *Queries) UpdateMusic(ctx context.Context, arg UpdateMusicParams) error {

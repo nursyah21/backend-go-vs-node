@@ -1,15 +1,15 @@
 {
   "license": "MIT",
   "scripts": {
-    "benchmark:node:json": "autocannon -d 5 -c 100 http://localhost:3000/api/v1/health",
-    "benchmark:go:json": "autocannon -d 5 -c 100 http://localhost:5000/api/v1/health",
-    "benchmark:json": "yarn benchmark:node:json && yarn benchmark:go:json",
+    "loadtest:node:json": "autocannon -d 5 -c 100 http://localhost:3000/api/v1/health",
+    "loadtest:go:json": "autocannon -d 5 -c 100 http://localhost:5000/api/v1/health",
+    "loadtest:json": "yarn loadtest:node:json && yarn loadtest:go:json",
 
-    "benchmark:go:db": "autocannon -d 5 -c 100 http://localhost:5000/api/v1/music",
-    "benchmark:node:db": "autocannon -d 5 -c 100 http://localhost:3000/api/v1/music",
-    "benchmark:db": "yarn benchmark:node:db && yarn benchmark:go:db",
+    "loadtest:go:db": "autocannon -d 5 -c 100 http://localhost:5000/api/v1/music",
+    "loadtest:node:db": "autocannon -d 5 -c 100 http://localhost:3000/api/v1/music",
+    "loadtest:db": "yarn loadtest:node:db && yarn loadtest:go:db",
 
-    "benchmark": "yarn benchmark:json && yarn benchmark:db",
+    "loadtest": "yarn loadtest:json && yarn loadtest:db",
     
     "test": "playwright test",
     "test:report": "playwright show-report"
