@@ -7,7 +7,11 @@
     "loadtest:go:db": "autocannon -d 10 -c 100 http://localhost:5000/api/v1/music",
     "loadtest:node:db": "autocannon -d 10 -c 100 http://localhost:3000/api/v1/music",
     "loadtest:db": "yarn loadtest:node:db && yarn loadtest:go:db",
-    "loadtest": "yarn loadtest:json && yarn loadtest:db",
+    "loadtest:node:jwt": "autocannon -m POST -H \"Content-Type: application/json\" -b '{\"username\":\"admin\",\"password\":\"password\"}' http://localhost:3000/api/v1/login",
+    "loadtest:go:jwt": "autocannon -m POST -H \"Content-Type: application/json\" -b '{\"username\":\"admin\",\"password\":\"password\"}' http://localhost:5000/api/v1/login",
+    "loadtest:jwt": "yarn loadtest:node:jwt && yarn loadtest:go:jwt",
+    "loadtest": "yarn loadtest:json && yarn loadtest:db && yarn loadtest:jwt",
+    
     "test": "playwright test"
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",

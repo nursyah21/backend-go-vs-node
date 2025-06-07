@@ -92,6 +92,8 @@ yarn db:drop
 
 before you run test you need to install playwright and autocannon
 
+please make sure you have already data, if not yet you can seeding
+
 ```bash
 yarn
 ```
@@ -143,3 +145,17 @@ yarn loadtest
     - total: 12k in 10s
 
 **golang 1.5x faster than nodejs for retrieving data from postgresql**
+
+### benchmark jwt (login process)
+
+- nodejs: 
+    - latency: 1558.83ms
+    - req/s: 6
+    - total: 74 in 10s
+
+- golang:   
+    - latency: 458.67ms
+    - req/s: 21
+    - total: 228 in 10s
+
+**golang 3x faster than nodejs for retrieving data from postgresql**
