@@ -12,7 +12,8 @@ yarn dev
 ```
 
 **run api-go**
-for run golang please, make sure you already install air for hot reload in golang, sqlc for generate migrate, migrate for push your migrate sql to your database
+
+before  please, make sure you already install air for hot reload in golang, sqlc for generate migrate, migrate for push your migrate sql to your database
 
 ```bash
 cd api-go

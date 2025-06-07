@@ -13,12 +13,12 @@ func MusicRoute(app *fiber.App, _db *db.Queries) {
 		musics, err := _db.ListMusics(c.Context())
 
 		if err != nil {
-			return c.JSON(&fiber.Map{
+			return c.Status(400).JSON(fiber.Map{
 				"error": err.Error(),
 			})
 		}
 
-		return c.JSON(&fiber.Map{
+		return c.JSON(fiber.Map{
 			"data": musics,
 		})
 	})
@@ -47,7 +47,7 @@ func MusicRoute(app *fiber.App, _db *db.Queries) {
 			Title: req.Title, Artist: req.Artist, Link: req.Link,
 		})
 
-		return c.JSON(&fiber.Map{
+		return c.JSON(fiber.Map{
 			"status": "success",
 		})
 	})
@@ -84,7 +84,7 @@ func MusicRoute(app *fiber.App, _db *db.Queries) {
 			ID: id, Title: req.Title, Artist: req.Artist, Link: req.Link,
 		})
 
-		return c.JSON(&fiber.Map{
+		return c.JSON(fiber.Map{
 			"status": "success",
 		})
 	})
@@ -100,7 +100,7 @@ func MusicRoute(app *fiber.App, _db *db.Queries) {
 
 		_db.DeleteMusic(c.Context(), id)
 
-		return c.JSON(&fiber.Map{
+		return c.JSON(fiber.Map{
 			"status": "success",
 		})
 	})
