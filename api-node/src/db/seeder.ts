@@ -1,17 +1,25 @@
+import axios from "axios";
 import { db } from "./db.js";
-import { musics, users } from "./schema.js";
+import { musics } from "./schema.js";
 
 console.log('seeding database...')
 
+try {
+    try {
+        await axios.post('http://localhost:3000/api/v1/register', {
+            username: "admin", password: "password"
+        })
+    } catch {
+        throw Error("admin already exists")
+    }
+    
+    const formatNumber = (num: number) => num.toString().padStart(2, '0')
 
-await db.insert(users).values([
-    {username: "admin", password: "password"}
-]);
-
-const formatNumber = (num: number) => num.toString().padStart(2,'0')
-
-await db.insert(musics).values(
-    Array.from({length:10}, (_, idx)=>(
-        {artist: `artist-${formatNumber(idx)}`, title: `title-${formatNumber(idx)}`, link: `link-${formatNumber(idx)}`}
-    ))
-);
+    await db.insert(musics).values(
+        Array.from({ length: 10 }, (_, idx) => (
+            { artist: `artist-${formatNumber(idx)}`, title: `title-${formatNumber(idx)}`, link: `link-${formatNumber(idx)}` }
+        ))
+    );
+} catch (error) {
+    console.log(error)
+}
