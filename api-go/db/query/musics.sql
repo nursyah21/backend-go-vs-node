@@ -4,19 +4,19 @@ ORDER BY title;
 
 -- name: CreateMusic :exec
 INSERT INTO musics (
-  title, artist, link
+  userid, title, artist, link
 ) VALUES (
-  $1, $2, $3
+  $1, $2, $3, $4
 );
 
 -- name: UpdateMusic :exec
 UPDATE musics 
-  set title = $2,
-  artist = $3,
-  link = $4
+  set title = $3,
+  artist = $4,
+  link = $5
 WHERE
-  id = $1;
+  id = $1 AND userid = $2;
 
 -- name: DeleteMusic :exec
 DELETE FROM musics
-WHERE id = $1;
+WHERE id = $1 AND userid = $2;
