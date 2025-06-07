@@ -1,8 +1,9 @@
-import { pgTable, serial, text } from "drizzle-orm/pg-core";
+import { integer, pgTable, serial, text } from "drizzle-orm/pg-core";
 
 export const musics = pgTable("musics", {
   id: serial('id').primaryKey(),
   title: text().notNull(),
+  userid: integer().notNull().references(() => users.id),
   artist: text().notNull(),
   link: text().notNull(),
 });
