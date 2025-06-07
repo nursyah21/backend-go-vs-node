@@ -1,16 +1,24 @@
 {
-    "license":"MIT",
-    "scripts": {
-        "test:node:json": "autocannon -d 30 -c 100 http://localhost:3000/api/v1/health",
-        "test:node:db": "autocannon -d 30 -c 100 http://localhost:3000/api/v1/music",
-        "test:node": "yarn test:node:json && yarn test:node:db",
-        "test:go:json": "autocannon -d 30 -c 100 http://localhost:5000/api/v1/health",
-        "test:go:db": "autocannon -d 30 -c 100 http://localhost:5000/api/v1/music",
-        "test:go": "yarn test:go:json && yarn test:go:db",
-        "test": "yarn test:node && yarn test:go"
-    },
-    "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",
-    "devDependencies": {
-        "autocannon": "^8.0.0"
-    }
+  "license": "MIT",
+  "scripts": {
+    "benchmark:node:json": "autocannon -d 5 -c 100 http://localhost:3000/api/v1/health",
+    "benchmark:go:json": "autocannon -d 5 -c 100 http://localhost:5000/api/v1/health",
+    "benchmark:json": "yarn benchmark:node:json && yarn benchmark:go:json",
+
+    "benchmark:go:db": "autocannon -d 5 -c 100 http://localhost:5000/api/v1/music",
+    "benchmark:node:db": "autocannon -d 5 -c 100 http://localhost:3000/api/v1/music",
+    "benchmark:db": "yarn benchmark:node:db && yarn benchmark:go:db",
+
+    "benchmark": "yarn benchmark:json && yarn benchmark:db",
+    
+    "test": "playwright test",
+    "test:report": "playwright show-report"
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",
+  "devDependencies": {
+    "@playwright/test": "^1.52.0",
+    "@types/node": "^22.15.30",
+    "autocannon": "^8.0.0"
+  },
+  "dependencies": {}
 }

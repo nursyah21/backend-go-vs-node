@@ -39,48 +39,48 @@ tech stack:
 
 ### benchmark json
 
-**100 conection running in 30s, and return of json**
+**100 conection running in 15s, and return of json**
 
 **nodejs**:
 - latency:
-    - avg:   13.81ms
-    - stdev: 6.2ms
+    - avg:   13.45ms
+    - stdev: 7ms
 - req/s:
-    - avg:   6,987
-    - stdev: 1,132
-- total:     210k in 30s
+    - avg:   7,183
+    - stdev: 960
+- total:     108k in 15s
 
 **golang**:
 - latency:
-    - avg:   8.4ms
-    - stdev: 4.38ms
+    - avg:   9.93ms
+    - stdev: 8.41ms
 - req/s:
-    - avg:   11,198
-    - stdev: 1,461
-- total:     336k in 30s
+    - avg:   9,660
+    - stdev: 2,164
+- total:     145k in 15s
 
-**golang 1.6x faster than nodejs for return of json**
+**golang 1.3x faster than nodejs for return of json**
 
 ### benchmark database
 
-**100 conection running in 30s, and return of data from database**
+**100 conection running in 15s, and return of data from database**
 
 **nodejs**:
 - latency:
-    - avg:   113.7ms
-    - stdev: 31.31ms
+    - avg:   149.1ms
+    - stdev: 58.76ms
 - req/s:
-    - avg:   875
-    - stdev: 142
-- total:     26k in 30s
+    - avg:   674
+    - stdev: 158
+- total:     10k in 15s
 
 **golang**:
 - latency:
-    - avg:   10.0ms
-    - stdev: 11.84ms
+    - avg:   19.78ms
+    - stdev: 18.26ms
 - req/s:
-    - avg:   9,607
-    - stdev: 2,391
-- total:     288k in 30s
+    - avg:   5,013
+    - stdev: 957
+- total:     288k in 15s
 
 **golang 11x faster than nodejs for retrieving data from postgresql**
