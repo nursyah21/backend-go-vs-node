@@ -18,6 +18,11 @@ docker compose up -d
 
 and for golang, you need to install air for hot reload, sqlc for generate orm
 
+```bash
+go install github.com/air-verse/air@latest
+go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest
+```
+
 ### api-node
 
 ```bash
@@ -85,8 +90,14 @@ yarn db:drop
 
 ## test
 
-for running test
+before you run test you need to install playwright and autocannon
+
+```bash
+yarn
 ```
+
+for run test
+```bash
 yarn test
 ```
 
