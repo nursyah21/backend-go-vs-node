@@ -1,5 +1,11 @@
 # README
 
+## tech stack
+
+-  nodejs: hono, drizzle
+-  golang: fiber, sqlc
+-  database: postgresql
+
 ## how to run api-node
 
 before you started it, please make sure you already run of docker compose for database.
@@ -28,59 +34,45 @@ yarn dev
 ```
 
 
-## benchmark
+## loadtest
 
-spec: windows 10, ram 8gb, cpu i5 6200u
+for run loadtest
+```bash
+yarn loadtest
+```
 
-tech stack:
-- nodejs   : hono, drizzle
-- golang   : fiber, sqlc
-- database : postgresql
+### spec loadtest
+
+- os: windows 10
+- ram: 8gb
+- cpu: i5 6200u
+- connection: 100
+- duration: 10s
 
 ### benchmark json
 
-**100 conection running in 15s, and return of json**
+- nodejs: 
+    - latency: 16.24ms
+    - req/s: 5,991
+    - total: 60k in 10s
 
-**nodejs**:
-- latency:
-    - avg:   13.45ms
-    - stdev: 7ms
-- req/s:
-    - avg:   7,183
-    - stdev: 960
-- total:     108k in 15s
+- golang:   
+    - latency: 9.37ms
+    - req/s: 10,195
+    - total: 102k in 10s
 
-**golang**:
-- latency:
-    - avg:   9.93ms
-    - stdev: 8.41ms
-- req/s:
-    - avg:   9,660
-    - stdev: 2,164
-- total:     145k in 15s
-
-**golang 1.3x faster than nodejs for return of json**
+**golang 1.7x faster than nodejs for return of json**
 
 ### benchmark database
 
-**100 conection running in 15s, and return of data from database**
+- nodejs: 
+    - latency: 120.09ms
+    - req/s: 827
+    - total: 8k in 10s
 
-**nodejs**:
-- latency:
-    - avg:   149.1ms
-    - stdev: 58.76ms
-- req/s:
-    - avg:   674
-    - stdev: 158
-- total:     10k in 15s
+- golang:   
+    - latency: 81.42ms
+    - req/s: 1,217
+    - total: 12k in 10s
 
-**golang**:
-- latency:
-    - avg:   19.78ms
-    - stdev: 18.26ms
-- req/s:
-    - avg:   5,013
-    - stdev: 957
-- total:     288k in 15s
-
-**golang 11x faster than nodejs for retrieving data from postgresql**
+**golang 1.5x faster than nodejs for retrieving data from postgresql**
