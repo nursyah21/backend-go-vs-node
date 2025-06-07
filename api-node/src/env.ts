@@ -1,0 +1,1 @@
+export const DATABASE_URL = "postgresql://node_user:node_password@localhost:5432/api_node?schema=public"
