@@ -1,6 +1,6 @@
 import axios from "axios";
 import { db } from "./db.js";
-import { musics } from "./schema.js";
+import { musics, users } from "./schema.js";
 
 console.log('seeding database...')
 
@@ -12,12 +12,13 @@ try {
     } catch {
         throw Error("admin already exists")
     }
-    
+
     const formatNumber = (num: number) => num.toString().padStart(2, '0')
+    const userid = (await db.select().from(users).limit(1))[0].id
 
     await db.insert(musics).values(
         Array.from({ length: 10 }, (_, idx) => (
-            { artist: `artist-${formatNumber(idx)}`, title: `title-${formatNumber(idx)}`, link: `link-${formatNumber(idx)}` }
+            { artist: `artist-${formatNumber(idx)}`, title: `title-${formatNumber(idx)}`, link: `link-${formatNumber(idx)}`, userid }
         ))
     );
 } catch (error) {
