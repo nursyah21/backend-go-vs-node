@@ -2,7 +2,13 @@
 
 ## how to run api-node
 
-before you run please make sure you already run of docker compose for database.
+before you started it, please make sure you already run of docker compose for database.
+
+```bash
+docker compose up -d
+```
+
+and for golang, you need to install air for hot reload, sqlc for generate migrate, and migrate for push your migrate sql to your database
 
 **run api-node**
 ```bash
@@ -13,7 +19,6 @@ yarn dev
 
 **run api-go**
 
-before  please, make sure you already install air for hot reload in golang, sqlc for generate migrate, migrate for push your migrate sql to your database
 
 ```bash
 cd api-go
