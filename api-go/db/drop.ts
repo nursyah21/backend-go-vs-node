@@ -1,7 +1,6 @@
+import { sql } from "drizzle-orm";
 import { db } from "./db.js";
-import { musics, users } from "./schema.js";
 
-console.log('dropping database...')
+console.log('dropping table...')
 
-await db.delete(users)
-await db.delete(musics)
+await db.execute(sql`DROP TABLE IF EXISTS musics, users `)

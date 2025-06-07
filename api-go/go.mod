@@ -2,7 +2,10 @@ module api-go
 
 go 1.24.2
 
-require github.com/jackc/pgx/v5 v5.7.5
+require (
+	github.com/jackc/pgx/v5 v5.7.5
+	golang.org/x/crypto v0.37.0
+)
 
 require (
 	github.com/andybalholm/brotli v1.1.0 // indirect
@@ -18,7 +21,6 @@ require (
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.51.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
-	golang.org/x/crypto v0.37.0 // indirect
 	golang.org/x/sync v0.13.0 // indirect
 	golang.org/x/text v0.24.0 // indirect
 )
