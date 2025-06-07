@@ -4,3 +4,9 @@ CREATE TABLE musics (
   artist text      NOT NULL,
   link   text      NOT NULL
 );
+
+CREATE TABLE users (
+  id     BIGSERIAL PRIMARY KEY,
+  username  text      NOT NULL,
+  password text      NOT NULL
+);

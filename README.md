@@ -1,12 +1,14 @@
 # README
 
+an example backend implement in nodejs and golang use most faster and popular libary
+
 ## tech stack
 
 -  nodejs: hono, drizzle
 -  golang: fiber, sqlc
 -  database: postgresql
 
-## how to run api-node
+## how to run
 
 before you started it, please make sure you already run of docker compose for database.
 
@@ -14,25 +16,35 @@ before you started it, please make sure you already run of docker compose for da
 docker compose up -d
 ```
 
-and for golang, you need to install air for hot reload, sqlc for generate migrate, and migrate for push your migrate sql to your database
+and for golang, you need to install air for hot reload, sqlc for generate migrate
 
-**run api-node**
+### api-node
+
 ```bash
 cd api-node
 yarn
+yarn drizzle:generate
+yarn drizzle:migrate
 yarn dev
 ```
 
-**run api-go**
-
+### api-go
 
 ```bash
 cd api-go
-yarn generate
-yarn migrate
+yarn
+yarn drizzle:generate
+yarn drizzle:migrate
+yarn sqlc:generate
 yarn dev
 ```
 
+## test
+
+for running test
+```
+yarn test
+```
 
 ## loadtest
 

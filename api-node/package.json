@@ -5,11 +5,12 @@
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "start": "tsx dist/index.js",
-    "migrate": "drizzle-kit push"
+    "drizzle:migrate": "drizzle-kit migrate",
+    "drizzle:generate": "drizzle-kit generate",
+    "drizzle:studio": "drizzle-kit studio"
   },
   "dependencies": {
     "@hono/node-server": "^1.14.3",
-    "@libsql/client": "^0.15.8",
     "dotenv": "^16.5.0",
     "drizzle-orm": "^0.44.2",
     "hash-wasm": "^4.12.0",
