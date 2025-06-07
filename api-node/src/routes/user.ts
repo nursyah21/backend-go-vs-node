@@ -1,9 +1,9 @@
+import { eq } from "drizzle-orm"
 import { Hono } from "hono"
 import { db } from "../db/db.js"
 import { users } from "../db/schema.js"
-import { hashPassword, verifyPassword } from "../lib/password.js"
-import { eq } from "drizzle-orm"
 import { generateJwt } from "../lib/jwt.js"
+import { hashPassword, verifyPassword } from "../lib/password.js"
 
 export const userRoute = new Hono()
 

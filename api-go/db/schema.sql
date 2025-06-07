@@ -1,5 +1,6 @@
 CREATE TABLE musics (
   id     BIGSERIAL PRIMARY KEY,
+  userid   BIGSERIAL NOT NULL REFERENCES users(id),
   title  text      NOT NULL,
   artist text      NOT NULL,
   link   text      NOT NULL

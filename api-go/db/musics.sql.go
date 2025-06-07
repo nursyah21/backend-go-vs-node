@@ -11,35 +11,46 @@ import (
 
 const createMusic = `-- name: CreateMusic :exec
 INSERT INTO musics (
-  title, artist, link
+  userid, title, artist, link
 ) VALUES (
-  $1, $2, $3
+  $1, $2, $3, $4
 )
 `
 
 type CreateMusicParams struct {
+	Userid int64  `json:"userid"`
 	Title  string `json:"title"`
 	Artist string `json:"artist"`
 	Link   string `json:"link"`
 }
 
 func (q *Queries) CreateMusic(ctx context.Context, arg CreateMusicParams) error {
-	_, err := q.db.Exec(ctx, createMusic, arg.Title, arg.Artist, arg.Link)
+	_, err := q.db.Exec(ctx, createMusic,
+		arg.Userid,
+		arg.Title,
+		arg.Artist,
+		arg.Link,
+	)
 	return err
 }
 
 const deleteMusic = `-- name: DeleteMusic :exec
 DELETE FROM musics
-WHERE id = $1
+WHERE id = $1 AND userid = $2
 `
 
-func (q *Queries) DeleteMusic(ctx context.Context, id int64) error {
-	_, err := q.db.Exec(ctx, deleteMusic, id)
+type DeleteMusicParams struct {
+	ID     int64 `json:"id"`
+	Userid int64 `json:"userid"`
+}
+
+func (q *Queries) DeleteMusic(ctx context.Context, arg DeleteMusicParams) error {
+	_, err := q.db.Exec(ctx, deleteMusic, arg.ID, arg.Userid)
 	return err
 }
 
 const listMusics = `-- name: ListMusics :many
-SELECT id, title, artist, link FROM musics
+SELECT id, userid, title, artist, link FROM musics
 ORDER BY title
 `
 
@@ -54,6 +65,7 @@ func (q *Queries) ListMusics(ctx context.Context) ([]Music, error) {
 		var i Music
 		if err := rows.Scan(
 			&i.ID,
+			&i.Userid,
 			&i.Title,
 			&i.Artist,
 			&i.Link,
@@ -70,15 +82,16 @@ func (q *Queries) ListMusics(ctx context.Context) ([]Music, error) {
 
 const updateMusic = `-- name: UpdateMusic :exec
 UPDATE musics 
-  set title = $2,
-  artist = $3,
-  link = $4
+  set title = $3,
+  artist = $4,
+  link = $5
 WHERE
-  id = $1
+  id = $1 AND userid = $2
 `
 
 type UpdateMusicParams struct {
 	ID     int64  `json:"id"`
+	Userid int64  `json:"userid"`
 	Title  string `json:"title"`
 	Artist string `json:"artist"`
 	Link   string `json:"link"`
@@ -87,6 +100,7 @@ type UpdateMusicParams struct {
 func (q *Queries) UpdateMusic(ctx context.Context, arg UpdateMusicParams) error {
 	_, err := q.db.Exec(ctx, updateMusic,
 		arg.ID,
+		arg.Userid,
 		arg.Title,
 		arg.Artist,
 		arg.Link,
