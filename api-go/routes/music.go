@@ -34,20 +34,6 @@ func parseAndValidateRequest(c *fiber.Ctx) error {
 	return c.Next()
 }
 
-func parseParamId(c *fiber.Ctx) error {
-	id, err := strconv.ParseInt(c.Params("id"), 10, 64)
-
-	if err != nil {
-		return c.Status(400).JSON(fiber.Map{
-			"error": "Invalid music ID",
-		})
-	}
-
-	c.Locals("id", id)
-
-	return c.Next()
-}
-
 func MusicRoute(app *fiber.App, _db *db.Queries) {
 
 	app.Get("/api/v1/music", func(c *fiber.Ctx) error {
@@ -62,56 +48,59 @@ func MusicRoute(app *fiber.App, _db *db.Queries) {
 		return c.JSON(musics)
 	})
 
-	app.Post("/api/v1/music", middleware.AuthMiddleware, parseAndValidateRequest, func(c *fiber.Ctx) error {
+	app.Post("/api/v1/music", middleware.AuthMiddleware, parseAndValidateRequest,
+		func(c *fiber.Ctx) error {
 
-		user := c.Locals("user").(*lib.CustomClaims)
-		req := c.Locals("req").(MusicRequest)
+			user := c.Locals("user").(*lib.CustomClaims)
+			req := c.Locals("req").(MusicRequest)
 
-		userId, _ := strconv.ParseInt(user.ID, 10, 64)
+			userId, _ := strconv.ParseInt(user.ID, 10, 64)
 
-		if err := _db.CreateMusic(c.Context(), db.CreateMusicParams{
-			Userid: userId,
-			Title:  req.Title, Artist: req.Artist, Link: req.Link,
-		}); err != nil {
-			return c.Status(400).JSON(fiber.Map{
-				"error": err.Error(),
+			if err := _db.CreateMusic(c.Context(), db.CreateMusicParams{
+				Userid: userId,
+				Title:  req.Title, Artist: req.Artist, Link: req.Link,
+			}); err != nil {
+				return c.Status(400).JSON(fiber.Map{
+					"error": err.Error(),
+				})
+			}
+
+			return c.JSON(fiber.Map{
+				"status": "success",
 			})
-		}
-
-		return c.JSON(fiber.Map{
-			"status": "success",
-		})
-	})
-
-	app.Put("/api/v1/music/:id", middleware.AuthMiddleware, parseAndValidateRequest, parseParamId, func(c *fiber.Ctx) error {
-
-		user := c.Locals("user").(*lib.CustomClaims)
-		req := c.Locals("req").(MusicRequest)
-		id := c.Locals("id").(int64)
-
-		userId, _ := strconv.ParseInt(user.ID, 10, 64)
-
-		_db.UpdateMusic(c.Context(), db.UpdateMusicParams{
-			ID: id, Userid: userId, Title: req.Title, Artist: req.Artist, Link: req.Link,
 		})
 
-		return c.JSON(fiber.Map{
-			"status": "success",
+	app.Put("/api/v1/music/:id", middleware.AuthMiddleware, parseAndValidateRequest,
+		middleware.ParamId, func(c *fiber.Ctx) error {
+
+			user := c.Locals("user").(*lib.CustomClaims)
+			req := c.Locals("req").(MusicRequest)
+			id := c.Locals("id").(int64)
+
+			userId, _ := strconv.ParseInt(user.ID, 10, 64)
+
+			_db.UpdateMusic(c.Context(), db.UpdateMusicParams{
+				ID: id, Userid: userId, Title: req.Title, Artist: req.Artist, Link: req.Link,
+			})
+
+			return c.JSON(fiber.Map{
+				"status": "success",
+			})
 		})
-	})
 
-	app.Delete("/api/v1/music/:id", middleware.AuthMiddleware, parseParamId, func(c *fiber.Ctx) error {
-		user := c.Locals("user").(*lib.CustomClaims)
-		id := c.Locals("id").(int64)
+	app.Delete("/api/v1/music/:id", middleware.AuthMiddleware, middleware.ParamId,
+		func(c *fiber.Ctx) error {
+			user := c.Locals("user").(*lib.CustomClaims)
+			id := c.Locals("id").(int64)
 
-		userId, _ := strconv.ParseInt(user.ID, 10, 64)
+			userId, _ := strconv.ParseInt(user.ID, 10, 64)
 
-		_db.DeleteMusic(c.Context(), db.DeleteMusicParams{
-			ID: id, Userid: userId,
+			_db.DeleteMusic(c.Context(), db.DeleteMusicParams{
+				ID: id, Userid: userId,
+			})
+
+			return c.JSON(fiber.Map{
+				"status": "success",
+			})
 		})
-
-		return c.JSON(fiber.Map{
-			"status": "success",
-		})
-	})
 }

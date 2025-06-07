@@ -17,3 +17,4 @@ export const authMiddleware = createMiddleware<{
 
     await next()
 })
+
