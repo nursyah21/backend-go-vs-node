@@ -16,7 +16,7 @@ before you started it, please make sure you already run of docker compose for da
 docker compose up -d
 ```
 
-and for golang, you need to install air for hot reload, sqlc for generate migrate
+and for golang, you need to install air for hot reload, sqlc for generate orm
 
 ### api-node
 
@@ -37,6 +37,50 @@ yarn drizzle:generate
 yarn drizzle:migrate
 yarn sqlc:generate
 yarn dev
+```
+
+## how to see database
+
+### api-go
+
+```bash
+cd api-go
+yarn drizzle:studio
+```
+
+### api-node
+
+```bash
+cd api-node
+yarn drizzle:studio
+```
+
+## seeding database
+
+### api-go
+```bash
+cd api-go
+yarn db:seed
+```
+
+### api-node
+```bash
+cd api-node
+yarn db:seed
+```
+
+## drop database
+
+### api-go
+```bash
+cd api-go
+yarn db:drop
+```
+
+### api-node
+```bash
+cd api-node
+yarn db:drop
 ```
 
 ## test

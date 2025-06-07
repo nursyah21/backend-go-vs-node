@@ -7,7 +7,9 @@
     "start": "tsx dist/index.js",
     "drizzle:migrate": "drizzle-kit migrate",
     "drizzle:generate": "drizzle-kit generate",
-    "drizzle:studio": "drizzle-kit studio"
+    "drizzle:studio": "drizzle-kit studio --port=4001",
+    "db:drop": "tsx ./db/drop.ts",
+    "db:seed": "tsx ./db/seeder.ts"
   },
   "dependencies": {
     "@hono/node-server": "^1.14.3",

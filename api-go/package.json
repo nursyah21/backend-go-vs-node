@@ -4,8 +4,10 @@
   "scripts": {
     "drizzle:migrate": "drizzle-kit migrate",
     "drizzle:generate": "drizzle-kit generate",
-    "drizzle:studio": "drizzle-kit studio",
+    "drizzle:studio": "drizzle-kit studio --port=4002",
     "sqlc:generate": "sqlc generate",
+    "db:drop": "tsx ./db/drop.ts",
+    "db:seed": "tsx ./db/seeder.ts",
     "dev": "air"
   },
   "dependencies": {
@@ -15,6 +17,7 @@
   "devDependencies": {
     "@types/node": "^22.15.30",
     "@types/pg": "^8.15.4",
-    "drizzle-kit": "^0.31.1"
+    "drizzle-kit": "^0.31.1",
+    "tsx": "^4.19.4"
   }
 }
