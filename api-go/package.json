@@ -1,8 +1,23 @@
 {
-  "license":"MIT",
+  "license": "MIT",
+  "type": "module",
   "scripts": {
-    "migrate": "migrate -path ./migrations -database \"postgres://go_user:go_password@localhost:5433/api_go?sslmode=disable\" up",
-    "generate": "sqlc generate",
+    "drizzle:migrate": "drizzle-kit migrate",
+    "drizzle:generate": "drizzle-kit generate",
+    "drizzle:studio": "drizzle-kit studio --port=4002",
+    "sqlc:generate": "sqlc generate",
+    "db:drop": "tsx ./db/drop.ts",
+    "db:seed": "tsx ./db/seeder.ts",
     "dev": "air"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.44.2",
+    "pg": "^8.16.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.30",
+    "@types/pg": "^8.15.4",
+    "drizzle-kit": "^0.31.1",
+    "tsx": "^4.19.4"
   }
 }

@@ -7,6 +7,12 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
+type MusicRequest struct {
+	Title  string `json:"title"`
+	Artist string `json:"artist"`
+	Link   string `json:"link"`
+}
+
 func MusicRoute(app *fiber.App, _db *db.Queries) {
 
 	app.Get("/api/v1/music", func(c *fiber.Ctx) error {
@@ -18,19 +24,12 @@ func MusicRoute(app *fiber.App, _db *db.Queries) {
 			})
 		}
 
-		return c.JSON(fiber.Map{
-			"data": musics,
-		})
+		return c.JSON(musics)
 	})
 
 	app.Post("/api/v1/music", func(c *fiber.Ctx) error {
-		type Request struct {
-			Title  string `json:"title"`
-			Artist string `json:"artist"`
-			Link   string `json:"link"`
-		}
 
-		var req Request
+		var req MusicRequest
 		if err := c.BodyParser(&req); err != nil {
 			return c.Status(400).JSON(fiber.Map{
 				"error": "Invalid request body",
@@ -61,13 +60,7 @@ func MusicRoute(app *fiber.App, _db *db.Queries) {
 			})
 		}
 
-		type Request struct {
-			Title  string `json:"title"`
-			Artist string `json:"artist"`
-			Link   string `json:"link"`
-		}
-
-		var req Request
+		var req MusicRequest
 		if err := c.BodyParser(&req); err != nil {
 			return c.Status(400).JSON(fiber.Map{
 				"error": "Invalid request body",

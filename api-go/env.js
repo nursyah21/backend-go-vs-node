@@ -1,0 +1,1 @@
+export const DATABASE_URL = "postgresql://go_user:go_password@localhost:5433/api_go?schema=public"

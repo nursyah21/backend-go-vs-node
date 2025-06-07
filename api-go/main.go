@@ -7,20 +7,25 @@ import (
 	"log"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 func main() {
 	ctx := context.Background()
 
-	conn, err := pgx.Connect(ctx, "user=go_user password=go_password port=5433 dbname=api_go sslmode=disable")
+	poolConfig, err := pgxpool.ParseConfig("user=go_user password=go_password port=5433 dbname=api_go sslmode=disable")
 	if err != nil {
-		log.Fatalf("Failed to connect to database: %v", err)
+		log.Fatalf("Failed to parse config: %v", err)
 		return
 	}
-	defer conn.Close(ctx)
 
-	db := db.New(conn)
+	pool, err := pgxpool.NewWithConfig(ctx, poolConfig)
+	if err != nil {
+		log.Fatalf("Failed to create connection pool: %v", err)
+	}
+	defer pool.Close()
+
+	db := db.New(pool)
 
 	app := fiber.New()
 

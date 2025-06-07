@@ -1,6 +1,14 @@
 # README
 
-## how to run api-node
+an example backend implement in nodejs and golang use most faster and popular libary
+
+## tech stack
+
+-  nodejs: hono, drizzle
+-  golang: fiber, sqlc
+-  database: postgresql
+
+## how to run
 
 before you started it, please make sure you already run of docker compose for database.
 
@@ -8,79 +16,119 @@ before you started it, please make sure you already run of docker compose for da
 docker compose up -d
 ```
 
-and for golang, you need to install air for hot reload, sqlc for generate migrate, and migrate for push your migrate sql to your database
+and for golang, you need to install air for hot reload, sqlc for generate orm
 
-**run api-node**
+### api-node
+
 ```bash
 cd api-node
 yarn
+yarn drizzle:generate
+yarn drizzle:migrate
 yarn dev
 ```
 
-**run api-go**
-
+### api-go
 
 ```bash
 cd api-go
-yarn generate
-yarn migrate
+yarn
+yarn drizzle:generate
+yarn drizzle:migrate
+yarn sqlc:generate
 yarn dev
 ```
 
+## how to see database
 
-## benchmark
+### api-go
 
-spec: windows 10, ram 8gb, cpu i5 6200u
+```bash
+cd api-go
+yarn drizzle:studio
+```
 
-tech stack:
-- nodejs   : hono, drizzle
-- golang   : fiber, sqlc
-- database : postgresql
+### api-node
+
+```bash
+cd api-node
+yarn drizzle:studio
+```
+
+## seeding database
+
+### api-go
+```bash
+cd api-go
+yarn db:seed
+```
+
+### api-node
+```bash
+cd api-node
+yarn db:seed
+```
+
+## drop database
+
+### api-go
+```bash
+cd api-go
+yarn db:drop
+```
+
+### api-node
+```bash
+cd api-node
+yarn db:drop
+```
+
+## test
+
+for running test
+```
+yarn test
+```
+
+## loadtest
+
+for run loadtest
+```bash
+yarn loadtest
+```
+
+### spec loadtest
+
+- os: windows 10
+- ram: 8gb
+- cpu: i5 6200u
+- connection: 100
+- duration: 10s
 
 ### benchmark json
 
-**100 conection running in 30s, and return of json**
+- nodejs: 
+    - latency: 16.24ms
+    - req/s: 5,991
+    - total: 60k in 10s
 
-**nodejs**:
-- latency:
-    - avg:   13.81ms
-    - stdev: 6.2ms
-- req/s:
-    - avg:   6,987
-    - stdev: 1,132
-- total:     210k in 30s
+- golang:   
+    - latency: 9.37ms
+    - req/s: 10,195
+    - total: 102k in 10s
 
-**golang**:
-- latency:
-    - avg:   8.4ms
-    - stdev: 4.38ms
-- req/s:
-    - avg:   11,198
-    - stdev: 1,461
-- total:     336k in 30s
-
-**golang 1.6x faster than nodejs for return of json**
+**golang 1.7x faster than nodejs for return of json**
 
 ### benchmark database
 
-**100 conection running in 30s, and return of data from database**
+- nodejs: 
+    - latency: 120.09ms
+    - req/s: 827
+    - total: 8k in 10s
 
-**nodejs**:
-- latency:
-    - avg:   113.7ms
-    - stdev: 31.31ms
-- req/s:
-    - avg:   875
-    - stdev: 142
-- total:     26k in 30s
+- golang:   
+    - latency: 81.42ms
+    - req/s: 1,217
+    - total: 12k in 10s
 
-**golang**:
-- latency:
-    - avg:   10.0ms
-    - stdev: 11.84ms
-- req/s:
-    - avg:   9,607
-    - stdev: 2,391
-- total:     288k in 30s
-
-**golang 11x faster than nodejs for retrieving data from postgresql**
+**golang 1.5x faster than nodejs for retrieving data from postgresql**

@@ -3,6 +3,8 @@ import { db } from "../db/db.js"
 import { musics } from "../db/schema.js"
 import { eq } from "drizzle-orm"
 
+type Props = typeof musics.$inferSelect
+
 export const musicRoute = new Hono()
 
 musicRoute.get('/music', async (c) => {
@@ -12,7 +14,7 @@ musicRoute.get('/music', async (c) => {
 })
 
 musicRoute.post('/music', async (c) => {
-    const { title, artist, link } = await c.req.json()
+    const { title, artist, link } = await c.req.json<Props>()
 
     if (!title || !artist || !link) {
         return c.json({ error: "Missing required fields: title, artist, or link" }, 400)
@@ -30,7 +32,7 @@ musicRoute.put('/music/:id', async (c) => {
         return c.json({ error: "Invalid ID format" }, 400)
     }
 
-    const { title, artist, link } = await c.req.json()
+    const { title, artist, link } = await c.req.json<Props>()
 
     if (!title || !artist || !link) {
         return c.json({ error: "Missing required fields: title, artist, or link" }, 400)
